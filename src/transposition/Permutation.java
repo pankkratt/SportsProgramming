@@ -1,24 +1,28 @@
 package transposition;
 
-public class Transposition {
-    private int n;
+public class Permutation {
     private char m;
     private char[] array;
+    private boolean[] used;
 
-    public Transposition(int n, char m) {
-        this.n = n;
+    public Permutation(char m) {
         this.m = m;
-        array = new char[n];
+        array = new char[m];
+        used = new boolean[m + 1];
     }
 
     public void rec(int index) {
-        if (index == n) {
+        if (index == (m - 'a' + 1)) {
             out();
             return;
         }
         for (char i = 'a'; i <= m; i++) {
-            array[index] = i;
-            rec(index + 1);
+            if (!used[i]) {
+                array[index] = i;
+                used[i] = true;
+                rec(index + 1);
+                used[i] = false;
+            }
         }
     }
 
@@ -30,6 +34,6 @@ public class Transposition {
     }
 
     public static void main(String[] args) {
-        new Transposition(5, 'e').rec(0);
+        new Permutation('e').rec(0);
     }
 }
